@@ -2,6 +2,28 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
+using FTShort = System.Int16;
+using FTUShort = System.UInt16;
+
+#if NATIVE_ILP64 || NATIVE_LP64
+using FTLong = System.Int64;
+using FTULong = System.UInt64;
+using FTPos = System.Int64;
+
+#else
+using FTLong = System.Int32;
+using FTULong = System.UInt32;
+using FTPos = System.Int32;
+
+#endif
+
+#if NATIVE_ILP64
+using FTInt = System.Int64;
+using FTUInt = System.UInt64;
+#else
+using FTInt = System.Int32;
+using FTUInt = System.UInt32;
+#endif
 
 namespace FTSharp
 {
@@ -567,9 +589,9 @@ namespace FTSharp
 
 
         //public delegate void DrawBitmapF(Bitmap bitmap, int posx, int posy);
-        public delegate void DrawBitmapF(FT.FT_Bitmap bitmap, int posx, int posy);
+        public delegate void DrawBitmapF(FT.FT_Bitmap bitmap, FTInt posx, FTInt posy);
 
-        public void RenderText(string text, DrawBitmapF drawBitmap, int penx, int peny)
+        public void RenderText(string text, DrawBitmapF drawBitmap, FTInt penx, FTInt peny)
         {
             int code;
 
